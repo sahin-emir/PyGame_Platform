@@ -31,6 +31,8 @@ bg_img=pygame.image.load("img/arkaplan.png")
 
 ## yukarısı kareler olusturuyor 
 class Player():# karakteri oynatan sınıf 
+
+
     def __init__(self,x,y):
         self.images_right =[]
         self.images_left = []
@@ -57,6 +59,7 @@ class Player():# karakteri oynatan sınıf
         dx=0
         dy=0
         walk_coldown=5
+
         if game_over == 0:
             
             #Klavye kontrolü
@@ -120,19 +123,17 @@ class Player():# karakteri oynatan sınıf
                         
             # düsman için  kontrol yapma
             if pygame.sprite.spritecollide(self,düsman_group,False):
-                game_over=-1
+                game_over= -1
             # lav için kontrol etme
             if pygame.sprite.spritecollide(self,lav_group,False):
-                game_over=-1          
+                game_over= -1          
             
             # karakter kordinat güncellemesi
             
             self.rect.x += dx
             self.rect.y += dy 
             
-            if self.rect.bottom > screen_height:
-                self.rect.bottom = screen_height
-                dy=0
+           
                 
         #karakteri ekrana ciziyor
         screen.blit(self.image,self.rect)
@@ -214,8 +215,7 @@ class Lava(pygame.sprite.Sprite):
         self.rect=self.image.get_rect()
         self.rect.x=x
         self.rect.y=y     
-        self.move_direction=1
-        self.move_counter=0
+       
                
         
         
@@ -254,11 +254,13 @@ while run:
     screen.blit(bg_img,(0,0))
     
     wold.draw()
-    
-    düsman_group.update()
+    if game_over == 0:
+        düsman_group.update()
+
     düsman_group.draw(screen)
     lav_group.draw(screen)
-    game_over = player.update(game_over)
+
+    game_over=player.update(game_over)
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
